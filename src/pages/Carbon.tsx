@@ -1,7 +1,8 @@
-import { useState, useEffect } from 'react';
-import Select, { ValueType, OptionTypeBase } from 'react-select';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useState } from 'react';
+import Select from 'react-select';
 import Header from '../components/Header'
-import { useNavigate } from 'react-router-dom'
 import { IconUsers, IconArrowsExchange, IconCar, IconCloudSnow, IconHelpHexagon } from '@tabler/icons-react';
 import axios from 'axios';
 
@@ -10,10 +11,10 @@ interface OptionType {
     label: string;
 }
 
-interface LatLng {
-    lat: any,
-    lng: any
-}
+// interface LatLng {
+//     lat: any,
+//     lng: any
+// }
 
 interface VehicleData {
     [key: string]: number;
@@ -23,35 +24,36 @@ const key: string = 'qnNrrKsjjpoDR6ZIwJw7OsuzkcyN1hmD';
 
 function CarbonView() {
     const [fromLocation, setFromLocation] = useState('');
-    const [isSetFromLocation, setIsFromLocation] = useState<boolean>(false);
-    const [latFromLocation, setLatFrom] = useState<LatLng>({ lat: null, lng: null });
+    // const [isSetFromLocation, setIsFromLocation] = useState<boolean>(false);
+    // const [latFromLocation, setLatFrom] = useState<LatLng>({ lat: null, lng: null });
 
     const [toLocation, setToLocation] = useState('');
-    const [isSetToLocation, setIsToLocation] = useState<boolean>(false);
-    const [latToLocation, setLatTo] = useState<LatLng>({ lat: null, lng: null });
+    // const [isSetToLocation, setIsToLocation] = useState<boolean>(false);
+    // const [latToLocation, setLatTo] = useState<LatLng>({ lat: null, lng: null });
 
     const [isLoading, setLoading] = useState(false);
-    const [routeInfo, setRoutInfo] = useState({})
+    const [routeInfo, setRoutInfo] = useState({
+        time: 0
+    })
     const [distance, setDistance] = useState(0)
 
-    const [timerId, setTimerId] = useState<any>(null);
-    const navigate = useNavigate()
+    // const [timerId, setTimerId] = useState<any>(null);
     
-    const handleKeyUp = (address: string, isFrom: boolean) => {
-        clearTimeout(timerId);
+    // const handleKeyUp = (address: string, isFrom: boolean) => {
+    //     clearTimeout(timerId);
     
-        if (address) {
-        const newTimerId = setTimeout(() => {
-        // Call your API here
-        getGeoLocation(address, isFrom)
-        }, 3000); // 2000 milliseconds = 2 seconds
+    //     if (address) {
+    //     const newTimerId = setTimeout(() => {
+    //     // Call your API here
+    //     getGeoLocation(address, isFrom)
+    //     }, 3000); // 2000 milliseconds = 2 seconds
 
-        setTimerId(newTimerId);
-    }
-    };
+    //     setTimerId(newTimerId);
+    // }
+    // };
 
     const customStyles = {
-        option: (prev, state) => ({
+        option: (prev: any) => ({
             ...prev,
             cursor: 'pointer',
         //   backgroundColor: state.isFocused ? 'lightgray' : 'white',
@@ -76,9 +78,9 @@ function CarbonView() {
         { value: 'eclectric car - 4 seats', label: 'Eclectric car - 4 seats' },
         { value: 'large car - 7 seats', label: 'Large car - 7 seats' },
     ];
-    const [selectedOption, setSelectedOption] = useState<ValueType<OptionTypeBase>>({ value: 'walking', label: 'walking' });
+    const [selectedOption, setSelectedOption] = useState<any>({ value: 'walking', label: 'walking' });
 
-    const handleOptionChange = (selected: ValueType<OptionTypeBase>) => {
+    const handleOptionChange = (selected: any) => {
         setSelectedOption(selected);
     };
 
@@ -100,39 +102,39 @@ function CarbonView() {
         { value: '15', label: '15' },
         { value: '16', label: '16' },
     ];
-    const [selectedNoTravelers, setSelectedNoTravelers] = useState<ValueType<OptionTypeBase>>({ value: '1', label: 'Yourself' },);
+    const [selectedNoTravelers, setSelectedNoTravelers] = useState<any>({ value: '1', label: 'Yourself' },);
 
-    const handleNoTravelersChange = (selected: ValueType<OptionTypeBase>) => {
+    const handleNoTravelersChange = (selected: any) => {
         setSelectedNoTravelers(selected);
     };
     
-    const getGeoLocation = async (query: string, isFrom: boolean) => {
-        try {
-            console.log("hello")
-            console.log(query)
-            const content = `https://www.mapquestapi.com/geocoding/v1/address?key=${key}&inFormat=kvp&outFormat=json&location=${query}&thumbMaps=false`
-            console.log(content)
-            const response = await axios(content)
-                .then((res) => {
-                    if(isFrom) {
-                        setIsFromLocation(true);
-                        if(res?.data?.results[0]?.locations[0]?.latLng)
-                            setLatFrom(res?.data?.results[0]?.locations[0]?.latLng);
-                    } else {
-                        setIsToLocation(true);
-                        if(res?.data?.results[0]?.locations[0]?.latLng)
-                            setLatTo(res?.data?.results[0]?.locations[0]?.latLng);
-                    }
+    // const getGeoLocation = async (query: string, isFrom: boolean) => {
+    //     try {
+    //         console.log("hello")
+    //         console.log(query)
+    //         const content = `https://www.mapquestapi.com/geocoding/v1/address?key=${key}&inFormat=kvp&outFormat=json&location=${query}&thumbMaps=false`
+    //         console.log(content)
+    //         const response = await axios(content)
+    //             .then((res) => {
+    //                 if(isFrom) {
+    //                     setIsFromLocation(true);
+    //                     if(res?.data?.results[0]?.locations[0]?.latLng)
+    //                         setLatFrom(res?.data?.results[0]?.locations[0]?.latLng);
+    //                 } else {
+    //                     setIsToLocation(true);
+    //                     if(res?.data?.results[0]?.locations[0]?.latLng)
+    //                         setLatTo(res?.data?.results[0]?.locations[0]?.latLng);
+    //                 }
                     
-                    // coordinate.lat = lat;
-                    // coordinate.lng = lng;
-                    console.log(res.data.results[0].locations[0]);
-                });
-            console.log(response);
-        } catch (error) {
-                console.error(error);
-            }
-    }
+    //                 // coordinate.lat = lat;
+    //                 // coordinate.lng = lng;
+    //                 console.log(res.data.results[0].locations[0]);
+    //             });
+    //         console.log(response);
+    //     } catch (error) {
+    //             console.error(error);
+    //         }
+    // }
     
     const vehicle: VehicleData = {
         "walking": 0,
@@ -217,14 +219,14 @@ function CarbonView() {
 
     const handleSearchChange = (query: string, isFrom: boolean) => {
         if(isFrom) {
-            if(isSetFromLocation && query !== fromLocation) {
-                setIsFromLocation(false);
-            }
+            // if(isSetFromLocation && query !== fromLocation) {
+            //     setIsFromLocation(false);
+            // }
             setFromLocation(query);
         }else {
-            if(isSetFromLocation && query !== toLocation) {
-                setIsFromLocation(false);
-            }
+            // if(isSetFromLocation && query !== toLocation) {
+            //     setIsFromLocation(false);
+            // }
             setToLocation(query)
         }
     };
@@ -267,7 +269,7 @@ function CarbonView() {
                                     }
                                     // onKeyUp={() => handleKeyUp(fromLocation, true)}
                                     value={fromLocation}
-                                    className={`flex items-center w-full h-14 pl-3 mt-1 text-sm font-normal text-gray-600 border border-gray-300 rounded focus:outline-none focus:border focus:border-indigo-700 ${isSetFromLocation && 'border-green'}`}
+                                    className={`flex items-center w-full h-14 pl-3 mt-1 text-sm font-normal text-gray-600 border border-gray-300 rounded focus:outline-none focus:border focus:border-green`}
                                     placeholder="Your starting point"
                                 />
                                 {/* {
@@ -291,7 +293,7 @@ function CarbonView() {
                                     }
                                     // onKeyUp={() => handleKeyUp(toLocation, false)}
                                     value={toLocation}
-                                    className={`flex items-center w-full h-14 pl-3 mt-1 text-sm font-normal text-gray-600 border border-gray-300 rounded focus:outline-none focus:border focus:border-indigo-700 ${isSetToLocation && 'border-green'}`}
+                                    className={`flex items-center w-full h-14 pl-3 mt-1 text-sm font-normal text-gray-600 border border-gray-300 rounded focus:outline-none focus:border focus:border-green`}
                                     placeholder="You go here"
                                 />
                                 {/* {
